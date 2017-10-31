@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Storage
         public StorageManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets the properties of a storage account’s Blob service, including
+        /// Sets the properties of a storage account’s Blob service, including
         /// properties for Storage Analytics and CORS (Cross-Origin Resource Sharing)
         /// rules.
         /// </summary>
@@ -65,8 +65,15 @@ namespace Microsoft.Azure.Management.Storage
         /// numbers and lower-case letters only.
         /// </param>
         /// <param name='cors'>
+        /// Specifies a CORS rule for the Blob service. You can include up to five
+        /// CorsRule elements in the request. If no CorsRule elements are included in
+        /// the request body, all CORS rules will be deleted, and CORS will be disabled
+        /// for the Blob service.
         /// </param>
         /// <param name='defaultServiceVersion'>
+        /// DefaultServiceVersion indicates the default version to use for requests to
+        /// the Blob service if an incoming request’s version is not specified.
+        /// Possible values include version 2008-10-27 and all more recent versions.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -86,7 +93,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> SetPropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, IList<CorsRule> cors = default(IList<CorsRule>), string defaultServiceVersion = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, IList<CorsRule> cors = default(IList<CorsRule>), string defaultServiceVersion = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -147,7 +154,7 @@ namespace Microsoft.Azure.Management.Storage
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "SetProperties", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "SetServiceProperties", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -308,7 +315,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BlobServiceProperties>> GetPropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BlobServicePropertiesResponse>> GetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -362,7 +369,7 @@ namespace Microsoft.Azure.Management.Storage
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetProperties", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetServiceProperties", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -468,7 +475,7 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<BlobServiceProperties>();
+            var _result = new AzureOperationResponse<BlobServicePropertiesResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -481,7 +488,7 @@ namespace Microsoft.Azure.Management.Storage
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BlobServiceProperties>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BlobServicePropertiesResponse>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

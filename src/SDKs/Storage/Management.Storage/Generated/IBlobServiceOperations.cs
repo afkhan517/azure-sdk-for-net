@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Storage
     public partial interface IBlobServiceOperations
     {
         /// <summary>
-        /// Gets the properties of a storage account’s Blob service, including
+        /// Sets the properties of a storage account’s Blob service, including
         /// properties for Storage Analytics and CORS (Cross-Origin Resource
         /// Sharing) rules.
         /// </summary>
@@ -38,8 +38,16 @@ namespace Microsoft.Azure.Management.Storage
         /// length and use numbers and lower-case letters only.
         /// </param>
         /// <param name='cors'>
+        /// Specifies a CORS rule for the Blob service. You can include up to
+        /// five CorsRule elements in the request. If no CorsRule elements are
+        /// included in the request body, all CORS rules will be deleted, and
+        /// CORS will be disabled for the Blob service.
         /// </param>
         /// <param name='defaultServiceVersion'>
+        /// DefaultServiceVersion indicates the default version to use for
+        /// requests to the Blob service if an incoming request’s version is
+        /// not specified. Possible values include version 2008-10-27 and all
+        /// more recent versions.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -53,7 +61,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> SetPropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, IList<CorsRule> cors = default(IList<CorsRule>), string defaultServiceVersion = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, IList<CorsRule> cors = default(IList<CorsRule>), string defaultServiceVersion = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the properties of a storage account’s Blob service, including
         /// properties for Storage Analytics and CORS (Cross-Origin Resource
@@ -83,6 +91,6 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BlobServiceProperties>> GetPropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BlobServicePropertiesResponse>> GetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

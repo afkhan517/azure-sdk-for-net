@@ -21,12 +21,20 @@ namespace Microsoft.Azure.Management.Storage.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum HTTPMethod
     {
-        [EnumMember(Value = "Get")]
-        Get,
-        [EnumMember(Value = "Put")]
-        Put,
+        [EnumMember(Value = "DELETE")]
+        DELETE,
+        [EnumMember(Value = "GET")]
+        GET,
         [EnumMember(Value = "HEAD")]
-        HEAD
+        HEAD,
+        [EnumMember(Value = "MERGE")]
+        MERGE,
+        [EnumMember(Value = "POST")]
+        POST,
+        [EnumMember(Value = "OPTIONS")]
+        OPTIONS,
+        [EnumMember(Value = "PUT")]
+        PUT
     }
     internal static class HTTPMethodEnumExtension
     {
@@ -39,12 +47,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         {
             switch( value )
             {
-                case HTTPMethod.Get:
-                    return "Get";
-                case HTTPMethod.Put:
-                    return "Put";
+                case HTTPMethod.DELETE:
+                    return "DELETE";
+                case HTTPMethod.GET:
+                    return "GET";
                 case HTTPMethod.HEAD:
                     return "HEAD";
+                case HTTPMethod.MERGE:
+                    return "MERGE";
+                case HTTPMethod.POST:
+                    return "POST";
+                case HTTPMethod.OPTIONS:
+                    return "OPTIONS";
+                case HTTPMethod.PUT:
+                    return "PUT";
             }
             return null;
         }
@@ -53,12 +69,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         {
             switch( value )
             {
-                case "Get":
-                    return HTTPMethod.Get;
-                case "Put":
-                    return HTTPMethod.Put;
+                case "DELETE":
+                    return HTTPMethod.DELETE;
+                case "GET":
+                    return HTTPMethod.GET;
                 case "HEAD":
                     return HTTPMethod.HEAD;
+                case "MERGE":
+                    return HTTPMethod.MERGE;
+                case "POST":
+                    return HTTPMethod.POST;
+                case "OPTIONS":
+                    return HTTPMethod.OPTIONS;
+                case "PUT":
+                    return HTTPMethod.PUT;
             }
             return null;
         }

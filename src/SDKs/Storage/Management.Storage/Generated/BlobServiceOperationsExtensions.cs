@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Storage
     public static partial class BlobServiceOperationsExtensions
     {
             /// <summary>
-            /// Gets the properties of a storage account’s Blob service, including
+            /// Sets the properties of a storage account’s Blob service, including
             /// properties for Storage Analytics and CORS (Cross-Origin Resource Sharing)
             /// rules.
             /// </summary>
@@ -41,16 +41,23 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='cors'>
+            /// Specifies a CORS rule for the Blob service. You can include up to five
+            /// CorsRule elements in the request. If no CorsRule elements are included in
+            /// the request body, all CORS rules will be deleted, and CORS will be disabled
+            /// for the Blob service.
             /// </param>
             /// <param name='defaultServiceVersion'>
+            /// DefaultServiceVersion indicates the default version to use for requests to
+            /// the Blob service if an incoming request’s version is not specified.
+            /// Possible values include version 2008-10-27 and all more recent versions.
             /// </param>
-            public static void SetProperties(this IBlobServiceOperations operations, string resourceGroupName, string accountName, IList<CorsRule> cors = default(IList<CorsRule>), string defaultServiceVersion = default(string))
+            public static void SetServiceProperties(this IBlobServiceOperations operations, string resourceGroupName, string accountName, IList<CorsRule> cors = default(IList<CorsRule>), string defaultServiceVersion = default(string))
             {
-                operations.SetPropertiesAsync(resourceGroupName, accountName, cors, defaultServiceVersion).GetAwaiter().GetResult();
+                operations.SetServicePropertiesAsync(resourceGroupName, accountName, cors, defaultServiceVersion).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the properties of a storage account’s Blob service, including
+            /// Sets the properties of a storage account’s Blob service, including
             /// properties for Storage Analytics and CORS (Cross-Origin Resource Sharing)
             /// rules.
             /// </summary>
@@ -67,15 +74,22 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='cors'>
+            /// Specifies a CORS rule for the Blob service. You can include up to five
+            /// CorsRule elements in the request. If no CorsRule elements are included in
+            /// the request body, all CORS rules will be deleted, and CORS will be disabled
+            /// for the Blob service.
             /// </param>
             /// <param name='defaultServiceVersion'>
+            /// DefaultServiceVersion indicates the default version to use for requests to
+            /// the Blob service if an incoming request’s version is not specified.
+            /// Possible values include version 2008-10-27 and all more recent versions.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SetPropertiesAsync(this IBlobServiceOperations operations, string resourceGroupName, string accountName, IList<CorsRule> cors = default(IList<CorsRule>), string defaultServiceVersion = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SetServicePropertiesAsync(this IBlobServiceOperations operations, string resourceGroupName, string accountName, IList<CorsRule> cors = default(IList<CorsRule>), string defaultServiceVersion = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.SetPropertiesWithHttpMessagesAsync(resourceGroupName, accountName, cors, defaultServiceVersion, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.SetServicePropertiesWithHttpMessagesAsync(resourceGroupName, accountName, cors, defaultServiceVersion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -95,9 +109,9 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
-            public static BlobServiceProperties GetProperties(this IBlobServiceOperations operations, string resourceGroupName, string accountName)
+            public static BlobServicePropertiesResponse GetServiceProperties(this IBlobServiceOperations operations, string resourceGroupName, string accountName)
             {
-                return operations.GetPropertiesAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+                return operations.GetServicePropertiesAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -120,9 +134,9 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BlobServiceProperties> GetPropertiesAsync(this IBlobServiceOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BlobServicePropertiesResponse> GetServicePropertiesAsync(this IBlobServiceOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPropertiesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetServicePropertiesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

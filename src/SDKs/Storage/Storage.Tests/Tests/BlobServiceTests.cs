@@ -46,7 +46,12 @@ namespace Storage.Tests
                 StorageManagementTestUtilities.VerifyAccountProperties(account, true);
 
                 string containerName = TestUtilities.GenerateName("container");
-                storageMgmtClient.BlobService.GetProperties(rgname, accountName);
+                storageMgmtClient.BlobService.SetServiceProperties(rgname, accountName);
+                BlobServicePropertiesResponse blobServiceProperties = storageMgmtClient.BlobService.GetServiceProperties(rgname, accountName);
+                ListContainerItems containers = storageMgmtClient.BlobContainers.List(rgname, accountName, containerName);
+                storageMgmtClient.BlobContainers.Lease(rgname, accountName, containerName);
+                storageMgmtClient.BlobContainers.Create(rgname, accountName, containerName, new Dictionary<string, string> { }, PublicAccess.Container);
+                storageMgmtClient.BlobContainers.CreateImmutabilityPolicies(rgname, accountName,containerName, parameters: new ImmutabilityPolicy { });
             }
         }
     }
