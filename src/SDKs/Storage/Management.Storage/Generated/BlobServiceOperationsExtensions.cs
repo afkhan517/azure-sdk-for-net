@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
-            public static BlobServicePropertiesResponse GetServiceProperties(this IBlobServiceOperations operations, string resourceGroupName, string accountName)
+            public static BlobServiceProperties GetServiceProperties(this IBlobServiceOperations operations, string resourceGroupName, string accountName)
             {
                 return operations.GetServicePropertiesAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BlobServicePropertiesResponse> GetServicePropertiesAsync(this IBlobServiceOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BlobServiceProperties> GetServicePropertiesAsync(this IBlobServiceOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetServicePropertiesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {

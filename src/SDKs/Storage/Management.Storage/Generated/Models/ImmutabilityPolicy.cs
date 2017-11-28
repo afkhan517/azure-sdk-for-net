@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     /// TODO
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ImmutabilityPolicy
+    public partial class ImmutabilityPolicy : BlobResource
     {
         /// <summary>
         /// Initializes a new instance of the ImmutabilityPolicy class.
@@ -33,15 +33,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Initializes a new instance of the ImmutabilityPolicy class.
         /// </summary>
         /// <param name="immutabilityPeriodSinceCreationInDays">TODO</param>
-        /// <param name="id">TODO</param>
-        /// <param name="name">TODO</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
         /// <param name="state">TODO. Possible values include: 'Locked',
         /// 'Unlocked'</param>
         public ImmutabilityPolicy(int immutabilityPeriodSinceCreationInDays, string id = default(string), string name = default(string), string type = default(string), ImmutabilityPolicyState? state = default(ImmutabilityPolicyState?))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
             State = state;
             CustomInit();
@@ -55,31 +54,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets or sets TODO
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets TODO
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// Gets or sets TODO
-        /// </summary>
         [JsonProperty(PropertyName = "properties.ImmutabilityPeriodSinceCreationInDays")]
         public int ImmutabilityPeriodSinceCreationInDays { get; set; }
 
         /// <summary>
-        /// Gets or sets TODO. Possible values include: 'Locked', 'Unlocked'
+        /// Gets TODO. Possible values include: 'Locked', 'Unlocked'
         /// </summary>
         [JsonProperty(PropertyName = "properties.State")]
-        public ImmutabilityPolicyState? State { get; set; }
+        public ImmutabilityPolicyState? State { get; private set; }
 
         /// <summary>
         /// Validate the object.

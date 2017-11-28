@@ -35,6 +35,116 @@ namespace Microsoft.Azure.Management.Storage
         /// group. Storage account names must be between 3 and 24 characters in
         /// length and use numbers and lower-case letters only.
         /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ListContainerItems>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the storage account within the specified resource
+        /// group. Storage account names must be between 3 and 24 characters in
+        /// length and use numbers and lower-case letters only.
+        /// </param>
+        /// <param name='containerName'>
+        /// The name of the blob container within the specified storage
+        /// account. Blob container names must be between 3 and 63 characters
+        /// in length and use numbers, lower-case letters and dash (-) only.
+        /// Every dash (-) character must be immediately preceded and followed
+        /// by a letter or number.
+        /// </param>
+        /// <param name='publicAccess'>
+        /// TODO. Possible values include: 'container', 'blob'
+        /// </param>
+        /// <param name='metadata'>
+        /// TODO
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<BlobContainer>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess = default(PublicAccess?), IDictionary<string, string> metadata = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the storage account within the specified resource
+        /// group. Storage account names must be between 3 and 24 characters in
+        /// length and use numbers and lower-case letters only.
+        /// </param>
+        /// <param name='containerName'>
+        /// The name of the blob container within the specified storage
+        /// account. Blob container names must be between 3 and 63 characters
+        /// in length and use numbers, lower-case letters and dash (-) only.
+        /// Every dash (-) character must be immediately preceded and followed
+        /// by a letter or number.
+        /// </param>
+        /// <param name='publicAccess'>
+        /// TODO. Possible values include: 'container', 'blob'
+        /// </param>
+        /// <param name='metadata'>
+        /// TODO
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<BlobContainer>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess = default(PublicAccess?), IDictionary<string, string> metadata = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the storage account within the specified resource
+        /// group. Storage account names must be between 3 and 24 characters in
+        /// length and use numbers and lower-case letters only.
+        /// </param>
         /// <param name='containerName'>
         /// The name of the blob container within the specified storage
         /// account. Blob container names must be between 3 and 63 characters
@@ -57,118 +167,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ListContainerItems>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the storage account within the specified resource
-        /// group. Storage account names must be between 3 and 24 characters in
-        /// length and use numbers and lower-case letters only.
-        /// </param>
-        /// <param name='containerName'>
-        /// The name of the blob container within the specified storage
-        /// account. Blob container names must be between 3 and 63 characters
-        /// in length and use numbers, lower-case letters and dash (-) only.
-        /// Every dash (-) character must be immediately preceded and followed
-        /// by a letter or number.
-        /// </param>
-        /// <param name='containerMeatadata'>
-        /// TODO
-        /// </param>
-        /// <param name='publicAccess'>
-        /// TODO. Possible values include: 'container', 'blob'
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IDictionary<string, string> containerMeatadata, PublicAccess publicAccess, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the storage account within the specified resource
-        /// group. Storage account names must be between 3 and 24 characters in
-        /// length and use numbers and lower-case letters only.
-        /// </param>
-        /// <param name='containerName'>
-        /// The name of the blob container within the specified storage
-        /// account. Blob container names must be between 3 and 63 characters
-        /// in length and use numbers, lower-case letters and dash (-) only.
-        /// Every dash (-) character must be immediately preceded and followed
-        /// by a letter or number.
-        /// </param>
-        /// <param name='containerMeatadata'>
-        /// TODO
-        /// </param>
-        /// <param name='publicAccess'>
-        /// TODO. Possible values include: 'container', 'blob'
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IDictionary<string, string> containerMeatadata = default(IDictionary<string, string>), PublicAccess? publicAccess = default(PublicAccess?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the storage account within the specified resource
-        /// group. Storage account names must be between 3 and 24 characters in
-        /// length and use numbers and lower-case letters only.
-        /// </param>
-        /// <param name='containerName'>
-        /// The name of the blob container within the specified storage
-        /// account. Blob container names must be between 3 and 63 characters
-        /// in length and use numbers, lower-case letters and dash (-) only.
-        /// Every dash (-) character must be immediately preceded and followed
-        /// by a letter or number.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<BlobContainerProperties>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BlobContainer>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// TODO
         /// </summary>
@@ -270,7 +269,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<LegalHold>> SetLegalHoldWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IList<string> tags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LegalHold>> SetLegalHoldWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IList<string> tags = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// TODO
         /// </summary>
@@ -308,7 +307,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<LegalHold>> ClearLegalHoldWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IList<string> tags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LegalHold>> ClearLegalHoldWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IList<string> tags = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// TODO
         /// </summary>
@@ -328,7 +327,13 @@ namespace Microsoft.Azure.Management.Storage
         /// Every dash (-) character must be immediately preceded and followed
         /// by a letter or number.
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='ifMatch'>
+        /// The entity state (ETag) version of the immutability policy to
+        /// update. A value of "*" can be used to apply the operation only if
+        /// the immutability policy already exists. If omitted, this operation
+        /// will always be applied.
+        /// </param>
+        /// <param name='immutabilityPeriodSinceCreationInDays'>
         /// TODO
         /// </param>
         /// <param name='customHeaders'>
@@ -346,7 +351,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ImmutabilityPolicy>> CreateImmutabilityPoliciesWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, ImmutabilityPolicy parameters = default(ImmutabilityPolicy), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ImmutabilityPolicy>> CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// TODO
         /// </summary>
@@ -365,6 +370,12 @@ namespace Microsoft.Azure.Management.Storage
         /// in length and use numbers, lower-case letters and dash (-) only.
         /// Every dash (-) character must be immediately preceded and followed
         /// by a letter or number.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// The entity state (ETag) version of the immutability policy to
+        /// update. A value of "*" can be used to apply the operation only if
+        /// the immutability policy already exists. If omitted, this operation
+        /// will always be applied.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -381,7 +392,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ImmutabilityPolicy>> GetImmutabilityPoliciesWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ImmutabilityPolicy>> GetImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// TODO
         /// </summary>
@@ -401,37 +412,11 @@ namespace Microsoft.Azure.Management.Storage
         /// Every dash (-) character must be immediately preceded and followed
         /// by a letter or number.
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteImmutabilityPoliciesWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the storage account within the specified resource
-        /// group. Storage account names must be between 3 and 24 characters in
-        /// length and use numbers and lower-case letters only.
-        /// </param>
-        /// <param name='containerName'>
-        /// The name of the blob container within the specified storage
-        /// account. Blob container names must be between 3 and 63 characters
-        /// in length and use numbers, lower-case letters and dash (-) only.
-        /// Every dash (-) character must be immediately preceded and followed
-        /// by a letter or number.
+        /// <param name='ifMatch'>
+        /// The entity state (ETag) version of the immutability policy to
+        /// update. A value of "*" can be used to apply the operation only if
+        /// the immutability policy already exists. If omitted, this operation
+        /// will always be applied.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -448,7 +433,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ImmutabilityPolicy>> LockImmutabilityPoliciesWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ImmutabilityPolicy>> DeleteImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// TODO
         /// </summary>
@@ -468,7 +453,54 @@ namespace Microsoft.Azure.Management.Storage
         /// Every dash (-) character must be immediately preceded and followed
         /// by a letter or number.
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='ifMatch'>
+        /// The entity state (ETag) version of the immutability policy to
+        /// update. A value of "*" can be used to apply the operation only if
+        /// the immutability policy already exists. If omitted, this operation
+        /// will always be applied.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ImmutabilityPolicy>> LockImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the storage account within the specified resource
+        /// group. Storage account names must be between 3 and 24 characters in
+        /// length and use numbers and lower-case letters only.
+        /// </param>
+        /// <param name='containerName'>
+        /// The name of the blob container within the specified storage
+        /// account. Blob container names must be between 3 and 63 characters
+        /// in length and use numbers, lower-case letters and dash (-) only.
+        /// Every dash (-) character must be immediately preceded and followed
+        /// by a letter or number.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// The entity state (ETag) version of the immutability policy to
+        /// update. A value of "*" can be used to apply the operation only if
+        /// the immutability policy already exists. If omitted, this operation
+        /// will always be applied.
+        /// </param>
+        /// <param name='immutabilityPeriodSinceCreationInDays'>
         /// TODO
         /// </param>
         /// <param name='customHeaders'>
@@ -486,6 +518,6 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ImmutabilityPolicy>> ExtendImmutabilityPoliciesWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, ImmutabilityPolicy parameters = default(ImmutabilityPolicy), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ImmutabilityPolicy>> ExtendImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

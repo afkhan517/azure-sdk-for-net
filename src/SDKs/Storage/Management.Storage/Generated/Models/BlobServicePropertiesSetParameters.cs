@@ -21,21 +21,24 @@ namespace Microsoft.Azure.Management.Storage.Models
     /// The properties of a storage account’s Blob service.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class BlobServicePropertiesResponse
+    public partial class BlobServicePropertiesSetParameters : BlobResource
     {
         /// <summary>
-        /// Initializes a new instance of the BlobServicePropertiesResponse
-        /// class.
+        /// Initializes a new instance of the
+        /// BlobServicePropertiesSetParameters class.
         /// </summary>
-        public BlobServicePropertiesResponse()
+        public BlobServicePropertiesSetParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the BlobServicePropertiesResponse
-        /// class.
+        /// Initializes a new instance of the
+        /// BlobServicePropertiesSetParameters class.
         /// </summary>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
         /// <param name="cors">Specifies a CORS rule for the Blob service. You
         /// can include up to five CorsRule elements in the request. If no
         /// CorsRule elements are included in the request body, all CORS rules
@@ -45,13 +48,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// the default version to use for requests to the Blob service if an
         /// incoming request’s version is not specified. Possible values
         /// include version 2008-10-27 and all more recent versions.</param>
-        public BlobServicePropertiesResponse(IList<CorsRule> cors = default(IList<CorsRule>), string defaultServiceVersion = default(string), string id = default(string), string name = default(string), string type = default(string))
+        public BlobServicePropertiesSetParameters(string id = default(string), string name = default(string), string type = default(string), IList<CorsRule> cors = default(IList<CorsRule>), string defaultServiceVersion = default(string))
+            : base(id, name, type)
         {
             Cors = cors;
             DefaultServiceVersion = defaultServiceVersion;
-            Id = id;
-            Name = name;
-            Type = type;
             CustomInit();
         }
 
@@ -66,7 +67,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// elements are included in the request body, all CORS rules will be
         /// deleted, and CORS will be disabled for the Blob service.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.cors")]
+        [JsonProperty(PropertyName = "storageServiceProperties.cors")]
         public IList<CorsRule> Cors { get; set; }
 
         /// <summary>
@@ -75,23 +76,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// version is not specified. Possible values include version
         /// 2008-10-27 and all more recent versions.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.defaultServiceVersion")]
+        [JsonProperty(PropertyName = "storageServiceProperties.defaultServiceVersion")]
         public string DefaultServiceVersion { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
 
     }
 }

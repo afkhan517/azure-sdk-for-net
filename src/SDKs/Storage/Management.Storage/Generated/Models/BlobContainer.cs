@@ -21,18 +21,18 @@ namespace Microsoft.Azure.Management.Storage.Models
     /// TODO
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ListContainerItem : BlobResource
+    public partial class BlobContainer : BlobResource
     {
         /// <summary>
-        /// Initializes a new instance of the ListContainerItem class.
+        /// Initializes a new instance of the BlobContainer class.
         /// </summary>
-        public ListContainerItem()
+        public BlobContainer()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ListContainerItem class.
+        /// Initializes a new instance of the BlobContainer class.
         /// </summary>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="metadata">TODO</param>
         /// <param name="immutabilityPolicy">TODO</param>
         /// <param name="legalHold">TODO</param>
-        public ListContainerItem(string id = default(string), string name = default(string), string type = default(string), PublicAccess? publicAccess = default(PublicAccess?), string etag = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), LeaseStatus? leaseStatus = default(LeaseStatus?), LeaseState? leaseState = default(LeaseState?), LeaseDuration? leaseDuration = default(LeaseDuration?), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHold legalHold = default(LegalHold))
+        public BlobContainer(string id = default(string), string name = default(string), string type = default(string), PublicAccess? publicAccess = default(PublicAccess?), string etag = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), LeaseStatus? leaseStatus = default(LeaseStatus?), LeaseState? leaseState = default(LeaseState?), LeaseDuration? leaseDuration = default(LeaseDuration?), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHold legalHold = default(LegalHold))
             : base(id, name, type)
         {
             PublicAccess = publicAccess;

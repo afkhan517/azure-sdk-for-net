@@ -11,34 +11,36 @@
 namespace Microsoft.Azure.Management.Storage.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// TODO
     /// </summary>
-    public partial class ContainerCreateProperties
+    [Rest.Serialization.JsonTransformation]
+    public partial class ImmutabilityPolicyProperties
     {
         /// <summary>
-        /// Initializes a new instance of the ContainerCreateProperties class.
+        /// Initializes a new instance of the ImmutabilityPolicyProperties
+        /// class.
         /// </summary>
-        public ContainerCreateProperties()
+        public ImmutabilityPolicyProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ContainerCreateProperties class.
+        /// Initializes a new instance of the ImmutabilityPolicyProperties
+        /// class.
         /// </summary>
-        /// <param name="containerMeatadata">TODO</param>
-        /// <param name="publicAccess">TODO. Possible values include:
-        /// 'container', 'blob'</param>
-        public ContainerCreateProperties(IDictionary<string, string> containerMeatadata, PublicAccess publicAccess)
+        /// <param name="immutabilityPeriodSinceCreationInDays">TODO</param>
+        /// <param name="state">TODO. Possible values include: 'Locked',
+        /// 'Unlocked'</param>
+        public ImmutabilityPolicyProperties(int immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state = default(ImmutabilityPolicyState?))
         {
-            ContainerMeatadata = containerMeatadata;
-            PublicAccess = publicAccess;
+            ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
+            State = state;
             CustomInit();
         }
 
@@ -50,14 +52,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets or sets TODO
         /// </summary>
-        [JsonProperty(PropertyName = "containerMeatadata")]
-        public IDictionary<string, string> ContainerMeatadata { get; set; }
+        [JsonProperty(PropertyName = "properties.ImmutabilityPeriodSinceCreationInDays")]
+        public int ImmutabilityPeriodSinceCreationInDays { get; set; }
 
         /// <summary>
-        /// Gets or sets TODO. Possible values include: 'container', 'blob'
+        /// Gets TODO. Possible values include: 'Locked', 'Unlocked'
         /// </summary>
-        [JsonProperty(PropertyName = "publicAccess")]
-        public PublicAccess PublicAccess { get; set; }
+        [JsonProperty(PropertyName = "properties.State")]
+        public ImmutabilityPolicyState? State { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -67,10 +69,6 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ContainerMeatadata == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ContainerMeatadata");
-            }
         }
     }
 }

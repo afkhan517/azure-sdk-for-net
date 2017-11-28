@@ -24,8 +24,90 @@ using Microsoft.Azure.KeyVault.WebKey;
 
 namespace Storage.Tests
 {
-    class BlobServiceTests
+    public class BlobServiceTests
     {
+
+        // Test cases for blob service
+        // template
+
+        //[Fact]
+        //public void BlobServiceGetPropertiesTest()
+        //{
+        //    var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+        //    using (MockContext context = MockContext.Start(this.GetType().FullName))
+        //    {
+        //        var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+        //        var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+        //        // Create resource group
+        //        var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+        //        // Create storage account
+        //        string accountName = TestUtilities.GenerateName("sto");
+        //        var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+        //        var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+        //        StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+
+        //        // implement case
+        //        try
+        //        {
+        //            string containerName = TestUtilities.GenerateName("container");
+        //            BlobServicePropertiesResponse blobServiceProperties = storageMgmtClient.BlobService.GetServiceProperties(rgName, accountName);
+        //            Assert.NotNull(blobServiceProperties);
+        //            Assert.NotNull(blobServiceProperties.Id);
+        //            Assert.NotNull(blobServiceProperties.Name);
+        //            Assert.NotNull(blobServiceProperties.Type);
+        //        }
+        //        finally
+        //        {
+        //            // clean up
+        //            storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+        //            resourcesClient.ResourceGroups.Delete(rgName);
+        //        }
+        //    }
+        //}
+
+        // get blob service properties
+        [Fact]
+        public void BlobServiceGetPropertiesTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+
+                // implement case
+                try
+                {
+                    string containerName = TestUtilities.GenerateName("container");
+                    BlobServiceProperties blobServiceProperties = storageMgmtClient.BlobService.GetServiceProperties(rgName, accountName);
+                    Assert.NotNull(blobServiceProperties);
+                    Assert.NotNull(blobServiceProperties.Id);
+                    Assert.NotNull(blobServiceProperties.Name);
+                    Assert.NotNull(blobServiceProperties.Type);
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        // set blob service properties
         [Fact]
         public void BlobServiceSetPropertiesTest()
         {
@@ -37,22 +119,478 @@ namespace Storage.Tests
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
                 // Create resource group
-                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 // Create storage account
                 string accountName = TestUtilities.GenerateName("sto");
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
-                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
                 StorageManagementTestUtilities.VerifyAccountProperties(account, true);
 
-                string containerName = TestUtilities.GenerateName("container");
-                storageMgmtClient.BlobService.SetServiceProperties(rgname, accountName);
-                BlobServicePropertiesResponse blobServiceProperties = storageMgmtClient.BlobService.GetServiceProperties(rgname, accountName);
-                ListContainerItems containers = storageMgmtClient.BlobContainers.List(rgname, accountName, containerName);
-                storageMgmtClient.BlobContainers.Lease(rgname, accountName, containerName);
-                storageMgmtClient.BlobContainers.Create(rgname, accountName, containerName, new Dictionary<string, string> { }, PublicAccess.Container);
-                storageMgmtClient.BlobContainers.CreateImmutabilityPolicies(rgname, accountName,containerName, parameters: new ImmutabilityPolicy { });
+                // implement case
+                try
+                {
+                    string containerName = TestUtilities.GenerateName("container");
+                    BlobServiceProperties blobServiceProperties = storageMgmtClient.BlobService.GetServiceProperties(rgName, accountName);
+                    Assert.NotNull(blobServiceProperties);
+                    Assert.NotNull(blobServiceProperties.Id);
+                    Assert.NotNull(blobServiceProperties.Name);
+                    Assert.NotNull(blobServiceProperties.Type);
+
+                    // set properties.
+                    blobServiceProperties.DefaultServiceVersion = "2017-04-17";
+                    //blobServiceProperties.Cors = new List<CorsRule>{new CorsRule{
+                    //    AllowedOrigins = new List<string>() { "www.ab.com", "www.bc.com" },
+                    //    AllowedMethods = HTTPMethod.GET,
+                    //    MaxAgeInSeconds = 500,
+                    //    ExposedHeaders = new List<string>(){
+                    //        "x-ms-meta-data*",
+                    //        "x-ms-meta-source*",
+                    //        "x-ms-meta-abc",
+                    //        "x-ms-meta-bcd"
+                    //    },
+                    //    AllowedHeaders = new List<string>() {
+                    //        "x-ms-meta-data*",
+                    //        "x-ms-meta-target*",
+                    //        "x-ms-meta-xyz",
+                    //        "x-ms-meta-foo"
+                    //    }
+                    //}};
+                    storageMgmtClient.BlobService.SetServiceProperties(rgName, accountName, blobServiceProperties.Cors, blobServiceProperties.DefaultServiceVersion);
+
+                    // veryfy properties.
+                    BlobServiceProperties blobServicePropertiesSet = storageMgmtClient.BlobService.GetServiceProperties(rgName, accountName);
+                    Assert.Equal(blobServiceProperties.Id, blobServicePropertiesSet.Id);
+                    Assert.Equal(blobServiceProperties.Name, blobServicePropertiesSet.Name);
+                    Assert.Equal(blobServiceProperties.Type, blobServicePropertiesSet.Type);
+
+                    Assert.Equal("2017-04-17", blobServicePropertiesSet.DefaultServiceVersion);
+                    Assert.Equal(1, blobServicePropertiesSet.Cors.Count);
+                    Assert.Equal(2, blobServicePropertiesSet.Cors[0].AllowedOrigins.Count);
+                    Assert.Equal(HTTPMethod.GET, blobServicePropertiesSet.Cors[0].AllowedMethods);
+                    Assert.Equal(4, blobServicePropertiesSet.Cors[0].ExposedHeaders.Count);
+                    Assert.Equal(4, blobServicePropertiesSet.Cors[0].AllowedHeaders.Count);
+                    Assert.Equal(500, blobServicePropertiesSet.Cors[0].MaxAgeInSeconds);
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
             }
         }
+
+        // create container
+        // delete container
+        [Fact]
+        public void BlobContainersCreateDeleteTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+
+                // implement case
+                try
+                {
+                    string containerName = TestUtilities.GenerateName("container");
+                    BlobContainer blobContainer = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName);
+                    Assert.Null(blobContainer.Metadata);
+                    Assert.Null(blobContainer.PublicAccess);
+
+                    blobContainer = storageMgmtClient.BlobContainers.Get(rgName, accountName, containerName);
+                    Assert.Null(blobContainer.Metadata);
+                    Assert.Null(blobContainer.PublicAccess);
+                    storageMgmtClient.BlobContainers.Delete(rgName, accountName, containerName);
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        // update container
+        // get container properties
+        [Fact]
+        public void BlobContainersUpdateTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+
+                // implement case
+                try
+                {
+                    string containerName = TestUtilities.GenerateName("container");
+                    BlobContainer blobContainer = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName);
+                    Assert.Null(blobContainer.Metadata);
+                    Assert.Null(blobContainer.PublicAccess);
+
+                    blobContainer.Metadata = new Dictionary<string, string>();
+                    blobContainer.Metadata.Add("metadata", "true");
+                    blobContainer.PublicAccess = PublicAccess.Container;
+                    var blobContainerSet = storageMgmtClient.BlobContainers.Update(rgName, accountName, containerName, metadata:blobContainer.Metadata, publicAccess:blobContainer.PublicAccess);
+                    Assert.NotNull(blobContainer.Metadata);
+                    Assert.NotNull(blobContainer.PublicAccess);
+                    Assert.Equal(blobContainer.Metadata, blobContainerSet.Metadata);
+                    Assert.Equal(blobContainer.PublicAccess, blobContainerSet.PublicAccess);
+
+                    var blobContainerGet = storageMgmtClient.BlobContainers.Get(rgName, accountName, containerName);
+                    Assert.Equal(blobContainerSet.PublicAccess, blobContainerGet.PublicAccess);
+                    Assert.Equal(blobContainerSet.Metadata, blobContainerGet.Metadata);
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        // list containers
+        [Fact]
+        public void BlobContainersListTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+
+                // implement case
+                try
+                {
+                    string containerName1 = TestUtilities.GenerateName("container");
+                    BlobContainer blobContainer = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName1);
+                    Assert.Null(blobContainer.Metadata);
+                    Assert.Null(blobContainer.PublicAccess);
+
+                    blobContainer.Metadata = new Dictionary<string, string>();
+                    blobContainer.Metadata.Add("metadata", "true");
+                    blobContainer.PublicAccess = PublicAccess.Container;
+                    var blobContainerSet = storageMgmtClient.BlobContainers.Update(rgName, accountName, containerName1, metadata:blobContainer.Metadata, publicAccess:blobContainer.PublicAccess);
+                    Assert.NotNull(blobContainer.Metadata);
+                    Assert.NotNull(blobContainer.PublicAccess);
+                    Assert.Equal(blobContainer.Metadata, blobContainerSet.Metadata);
+                    Assert.Equal(blobContainer.PublicAccess, blobContainerSet.PublicAccess);
+
+                    string containerName2 = TestUtilities.GenerateName("container");
+                    BlobContainer blobContainer2 = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName1);
+                    Assert.Null(blobContainer2.Metadata);
+                    Assert.Null(blobContainer2.PublicAccess);
+
+                    var containerList = storageMgmtClient.BlobContainers.List(rgName, accountName);
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        // set/clear legal hold.
+        [Fact]
+        public void BlobContainersSetLegalHoldTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+
+                // implement case
+                try
+                {
+                    string containerName = TestUtilities.GenerateName("container");
+                    BlobContainer blobContainer = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName);
+                    Assert.Null(blobContainer.Metadata);
+                    Assert.Null(blobContainer.PublicAccess);
+
+                    LegalHold legalHold = storageMgmtClient.BlobContainers.SetLegalHold(rgName, accountName, containerName, new List<string> { "tag1", "tag2", "tag3" });
+                    Assert.True(legalHold.HasLegalHold);
+                    Assert.Equal(new List<string> { "tag1", "tag2", "tag3" }, legalHold.Tags);
+
+                    legalHold = storageMgmtClient.BlobContainers.ClearLegalHold(rgName, accountName, containerName, new List<string> { "tag1", "tag2", "tag3" });
+                    Assert.False(legalHold.HasLegalHold);
+                    Assert.Equal(0, legalHold.Tags.Count);
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        // create and delete immutability policies.
+        [Fact]
+        public void BlobContainersCreateDeleteImmutabilityPolicyTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+
+                // implement case
+                try
+                {
+                    string containerName = TestUtilities.GenerateName("container");
+                    BlobContainer blobContainer = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName);
+                    Assert.Null(blobContainer.Metadata);
+                    Assert.Null(blobContainer.PublicAccess);
+
+                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"", immutabilityPeriodSinceCreationInDays:3);
+                    Assert.NotNull(immutabilityPolicy.Id);
+                    Assert.NotNull(immutabilityPolicy.Type);
+                    Assert.NotNull(immutabilityPolicy.Name);
+                    Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+                    Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
+
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.DeleteImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"");
+                    Assert.NotNull(immutabilityPolicy.Id);
+                    Assert.NotNull(immutabilityPolicy.Type);
+                    Assert.NotNull(immutabilityPolicy.Name);
+                    Assert.Equal(0, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+                    Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        // update and get immutability policies.
+        [Fact]
+        public void BlobContainersUpdateImmutabilityPolicyTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+
+                // implement case
+                try
+                {
+                    string containerName = TestUtilities.GenerateName("container");
+                    BlobContainer blobContainer = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName);
+                    Assert.Null(blobContainer.Metadata);
+                    Assert.Null(blobContainer.PublicAccess);
+
+                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"", immutabilityPeriodSinceCreationInDays: 3);
+                    Assert.NotNull(immutabilityPolicy.Id);
+                    Assert.NotNull(immutabilityPolicy.Type);
+                    Assert.NotNull(immutabilityPolicy.Name);
+                    Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+                    Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
+
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"", immutabilityPeriodSinceCreationInDays: 5);
+                    Assert.NotNull(immutabilityPolicy.Id);
+                    Assert.NotNull(immutabilityPolicy.Type);
+                    Assert.NotNull(immutabilityPolicy.Name);
+                    Assert.Equal(5, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+                    Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
+
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.GetImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"");
+                    Assert.NotNull(immutabilityPolicy.Id);
+                    Assert.NotNull(immutabilityPolicy.Type);
+                    Assert.NotNull(immutabilityPolicy.Name);
+                    Assert.Equal(5, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+                    Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+
+        // lock immutability policies.
+        [Fact]
+        public void BlobContainersLockImmutabilityPolicyTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+
+                // implement case
+                try
+                {
+                    string containerName = TestUtilities.GenerateName("container");
+                    BlobContainer blobContainer = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName);
+                    Assert.Null(blobContainer.Metadata);
+                    Assert.Null(blobContainer.PublicAccess);
+
+                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch: "", immutabilityPeriodSinceCreationInDays: 3);
+                    Assert.NotNull(immutabilityPolicy.Id);
+                    Assert.NotNull(immutabilityPolicy.Type);
+                    Assert.NotNull(immutabilityPolicy.Name);
+                    Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+                    Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
+
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.LockImmutabilityPolicy(rgName, accountName, containerName, ifMatch: "");
+                    Assert.NotNull(immutabilityPolicy.Id);
+                    Assert.NotNull(immutabilityPolicy.Type);
+                    Assert.NotNull(immutabilityPolicy.Name);
+                    Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+                    Assert.Equal(ImmutabilityPolicyState.Locked, immutabilityPolicy.State);
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        // extend immutability policies.
+        [Fact]
+        public void BlobContainersExtendImmutabilityPolicyTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+
+                // implement case
+                try
+                {
+                    string containerName = TestUtilities.GenerateName("container");
+                    BlobContainer blobContainer = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName);
+                    Assert.Null(blobContainer.Metadata);
+                    Assert.Null(blobContainer.PublicAccess);
+
+                    ImmutabilityPolicy immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"", immutabilityPeriodSinceCreationInDays: 3);
+                    Assert.NotNull(immutabilityPolicy.Id);
+                    Assert.NotNull(immutabilityPolicy.Type);
+                    Assert.NotNull(immutabilityPolicy.Name);
+                    Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+                    Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
+
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.LockImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"");
+                    Assert.NotNull(immutabilityPolicy.Id);
+                    Assert.NotNull(immutabilityPolicy.Type);
+                    Assert.NotNull(immutabilityPolicy.Name);
+                    Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+                    Assert.Equal(ImmutabilityPolicyState.Locked, immutabilityPolicy.State);
+
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.ExtendImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"", immutabilityPeriodSinceCreationInDays: 100);
+                    Assert.NotNull(immutabilityPolicy.Id);
+                    Assert.NotNull(immutabilityPolicy.Type);
+                    Assert.NotNull(immutabilityPolicy.Name);
+                    Assert.Equal(100, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+                    Assert.Equal(ImmutabilityPolicyState.Locked, immutabilityPolicy.State);
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
     }
 }
