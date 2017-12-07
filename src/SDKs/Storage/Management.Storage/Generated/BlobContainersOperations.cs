@@ -2084,7 +2084,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ImmutabilityPolicy>> CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersCreateOrUpdateImmutabilityPolicyHeaders>> CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2284,7 +2284,7 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ImmutabilityPolicy>();
+            var _result = new AzureOperationResponse<ImmutabilityPolicy,BlobContainersCreateOrUpdateImmutabilityPolicyHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2308,6 +2308,19 @@ namespace Microsoft.Azure.Management.Storage
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<BlobContainersCreateOrUpdateImmutabilityPolicyHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -2360,7 +2373,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ImmutabilityPolicy>> GetImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ImmutabilityPolicy>> GetImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2418,10 +2431,6 @@ namespace Microsoft.Azure.Management.Storage
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (ifMatch == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

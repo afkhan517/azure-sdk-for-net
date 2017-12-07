@@ -22,6 +22,10 @@ using Microsoft.Azure.Test.HttpRecorder;
 using System.Net.Http;
 using Microsoft.Azure.KeyVault.WebKey;
 
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
+
 namespace Storage.Tests
 {
     public class BlobServiceTests
@@ -262,7 +266,12 @@ namespace Storage.Tests
                     Assert.Equal(blobContainer.Metadata, blobContainerSet.Metadata);
                     Assert.Equal(blobContainer.PublicAccess, blobContainerSet.PublicAccess);
 
+                    var storageAccount = new CloudStorageAccount(new StorageCredentials(accountName, storageMgmtClient.StorageAccounts.ListKeys(rgName, accountName).Keys.ElementAt(0).Value), false);
+                    var container = storageAccount.CreateCloudBlobClient().GetContainerReference(containerName);
+                    container.AcquireLeaseAsync(TimeSpan.FromSeconds(45)).Wait();
+
                     var blobContainerGet = storageMgmtClient.BlobContainers.Get(rgName, accountName, containerName);
+                    Assert.Equal(Microsoft.Azure.Management.Storage.Models.LeaseDuration.Fixed, blobContainerGet.LeaseDuration);
                     Assert.Equal(blobContainerSet.PublicAccess, blobContainerGet.PublicAccess);
                     Assert.Equal(blobContainerSet.Metadata, blobContainerGet.Metadata);
                 }
@@ -313,9 +322,13 @@ namespace Storage.Tests
                     Assert.Equal(blobContainer.PublicAccess, blobContainerSet.PublicAccess);
 
                     string containerName2 = TestUtilities.GenerateName("container");
-                    BlobContainer blobContainer2 = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName1);
+                    BlobContainer blobContainer2 = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName2);
                     Assert.Null(blobContainer2.Metadata);
                     Assert.Null(blobContainer2.PublicAccess);
+
+                    var storageAccount = new CloudStorageAccount(new StorageCredentials(accountName, storageMgmtClient.StorageAccounts.ListKeys(rgName, accountName).Keys.ElementAt(0).Value), false);
+                    var container = storageAccount.CreateCloudBlobClient().GetContainerReference(containerName2);
+                    container.AcquireLeaseAsync(TimeSpan.FromSeconds(45)).Wait();
 
                     var containerList = storageMgmtClient.BlobContainers.List(rgName, accountName);
                 }

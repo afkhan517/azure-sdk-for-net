@@ -351,7 +351,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ImmutabilityPolicy>> CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersCreateOrUpdateImmutabilityPolicyHeaders>> CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// TODO
         /// </summary>
@@ -392,7 +392,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ImmutabilityPolicy>> GetImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ImmutabilityPolicy>> GetImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// TODO
         /// </summary>
