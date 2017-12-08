@@ -143,23 +143,23 @@ namespace Storage.Tests
 
                     // set properties.
                     blobServiceProperties.DefaultServiceVersion = "2017-04-17";
-                    //blobServiceProperties.Cors = new List<CorsRule>{new CorsRule{
-                    //    AllowedOrigins = new List<string>() { "www.ab.com", "www.bc.com" },
-                    //    AllowedMethods = HTTPMethod.GET,
-                    //    MaxAgeInSeconds = 500,
-                    //    ExposedHeaders = new List<string>(){
-                    //        "x-ms-meta-data*",
-                    //        "x-ms-meta-source*",
-                    //        "x-ms-meta-abc",
-                    //        "x-ms-meta-bcd"
-                    //    },
-                    //    AllowedHeaders = new List<string>() {
-                    //        "x-ms-meta-data*",
-                    //        "x-ms-meta-target*",
-                    //        "x-ms-meta-xyz",
-                    //        "x-ms-meta-foo"
-                    //    }
-                    //}};
+                    blobServiceProperties.Cors = new CorsRule{
+                        AllowedOrigins = new List<string>() { "www.ab.com", "www.bc.com" },
+                        AllowedMethods = HTTPMethod.GET,
+                        MaxAgeInSeconds = 500,
+                        ExposedHeaders = new List<string>(){
+                            "x-ms-meta-data*",
+                            "x-ms-meta-source*",
+                            "x-ms-meta-abc",
+                            "x-ms-meta-bcd"
+                        },
+                        AllowedHeaders = new List<string>() {
+                            "x-ms-meta-data*",
+                            "x-ms-meta-target*",
+                            "x-ms-meta-xyz",
+                            "x-ms-meta-foo"
+                        }
+                    };
                     storageMgmtClient.BlobService.SetServiceProperties(rgName, accountName, blobServiceProperties.Cors, blobServiceProperties.DefaultServiceVersion);
 
                     // veryfy properties.
@@ -169,12 +169,11 @@ namespace Storage.Tests
                     Assert.Equal(blobServiceProperties.Type, blobServicePropertiesSet.Type);
 
                     Assert.Equal("2017-04-17", blobServicePropertiesSet.DefaultServiceVersion);
-                    Assert.Equal(1, blobServicePropertiesSet.Cors.Count);
-                    Assert.Equal(2, blobServicePropertiesSet.Cors[0].AllowedOrigins.Count);
-                    Assert.Equal(HTTPMethod.GET, blobServicePropertiesSet.Cors[0].AllowedMethods);
-                    Assert.Equal(4, blobServicePropertiesSet.Cors[0].ExposedHeaders.Count);
-                    Assert.Equal(4, blobServicePropertiesSet.Cors[0].AllowedHeaders.Count);
-                    Assert.Equal(500, blobServicePropertiesSet.Cors[0].MaxAgeInSeconds);
+                    Assert.Equal(2, blobServicePropertiesSet.Cors.AllowedOrigins.Count);
+                    Assert.Equal(HTTPMethod.GET, blobServicePropertiesSet.Cors.AllowedMethods);
+                    Assert.Equal(4, blobServicePropertiesSet.Cors.ExposedHeaders.Count);
+                    Assert.Equal(4, blobServicePropertiesSet.Cors.AllowedHeaders.Count);
+                    Assert.Equal(500, blobServicePropertiesSet.Cors.MaxAgeInSeconds);
                 }
                 finally
                 {
