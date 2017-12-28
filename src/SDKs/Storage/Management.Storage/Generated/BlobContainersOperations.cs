@@ -2055,13 +2055,13 @@ namespace Microsoft.Azure.Management.Storage
         /// numbers, lower-case letters and dash (-) only. Every dash (-) character
         /// must be immediately preceded and followed by a letter or number.
         /// </param>
+        /// <param name='immutabilityPeriodSinceCreationInDays'>
+        /// TODO
+        /// </param>
         /// <param name='ifMatch'>
         /// The entity state (ETag) version of the immutability policy to update. A
         /// value of "*" can be used to apply the operation only if the immutability
         /// policy already exists. If omitted, this operation will always be applied.
-        /// </param>
-        /// <param name='immutabilityPeriodSinceCreationInDays'>
-        /// TODO
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2084,7 +2084,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersCreateOrUpdateImmutabilityPolicyHeaders>> CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersCreateOrUpdateImmutabilityPolicyHeaders>> CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, int immutabilityPeriodSinceCreationInDays, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2142,10 +2142,6 @@ namespace Microsoft.Azure.Management.Storage
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (ifMatch == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
             }
             ImmutabilityPolicy parameters = default(ImmutabilityPolicy);
             parameters = new ImmutabilityPolicy();

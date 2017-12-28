@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets TODO
         /// </summary>
-        [JsonProperty(PropertyName = "properties.LegalHold")]
+        [JsonProperty(PropertyName = "properties.legalHold")]
         public LegalHold LegalHold { get; private set; }
 
         /// <summary>

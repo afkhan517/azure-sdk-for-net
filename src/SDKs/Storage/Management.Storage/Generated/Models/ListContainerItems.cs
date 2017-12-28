@@ -31,10 +31,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the ListContainerItems class.
         /// </summary>
-        /// <param name="blobContainers">TODO</param>
-        public ListContainerItems(IList<ListContainerItem> blobContainers = default(IList<ListContainerItem>))
+        /// <param name="value">TODO</param>
+        public ListContainerItems(IList<ListContainerItem> value = default(IList<ListContainerItem>))
         {
-            BlobContainers = blobContainers;
+            Value = value;
             CustomInit();
         }
 
@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets or sets TODO
         /// </summary>
-        [JsonProperty(PropertyName = "blobContainers")]
-        public IList<ListContainerItem> BlobContainers { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<ListContainerItem> Value { get; set; }
 
     }
 }

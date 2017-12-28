@@ -526,17 +526,17 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers, lower-case letters and dash (-) only. Every dash (-) character
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
+            /// <param name='immutabilityPeriodSinceCreationInDays'>
+            /// TODO
+            /// </param>
             /// <param name='ifMatch'>
             /// The entity state (ETag) version of the immutability policy to update. A
             /// value of "*" can be used to apply the operation only if the immutability
             /// policy already exists. If omitted, this operation will always be applied.
             /// </param>
-            /// <param name='immutabilityPeriodSinceCreationInDays'>
-            /// TODO
-            /// </param>
-            public static ImmutabilityPolicy CreateOrUpdateImmutabilityPolicy(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays)
+            public static ImmutabilityPolicy CreateOrUpdateImmutabilityPolicy(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, int immutabilityPeriodSinceCreationInDays, string ifMatch = default(string))
             {
-                return operations.CreateOrUpdateImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, ifMatch, immutabilityPeriodSinceCreationInDays).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, immutabilityPeriodSinceCreationInDays, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -560,20 +560,20 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers, lower-case letters and dash (-) only. Every dash (-) character
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
+            /// <param name='immutabilityPeriodSinceCreationInDays'>
+            /// TODO
+            /// </param>
             /// <param name='ifMatch'>
             /// The entity state (ETag) version of the immutability policy to update. A
             /// value of "*" can be used to apply the operation only if the immutability
             /// policy already exists. If omitted, this operation will always be applied.
             /// </param>
-            /// <param name='immutabilityPeriodSinceCreationInDays'>
-            /// TODO
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImmutabilityPolicy> CreateOrUpdateImmutabilityPolicyAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImmutabilityPolicy> CreateOrUpdateImmutabilityPolicyAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, int immutabilityPeriodSinceCreationInDays, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(resourceGroupName, accountName, containerName, ifMatch, immutabilityPeriodSinceCreationInDays, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(resourceGroupName, accountName, containerName, immutabilityPeriodSinceCreationInDays, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
