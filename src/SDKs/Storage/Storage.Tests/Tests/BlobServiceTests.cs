@@ -112,77 +112,77 @@ namespace Storage.Tests
         }
 
         // set blob service properties
-        [Fact]
-        public void BlobServiceSetPropertiesTest()
-        {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+        //[Fact]
+        //public void BlobServiceSetPropertiesTest()
+        //{
+        //    var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+        //    using (MockContext context = MockContext.Start(this.GetType().FullName))
+        //    {
+        //        var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+        //        var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
-                // Create resource group
-                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+        //        // Create resource group
+        //        var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
-                // Create storage account
-                string accountName = TestUtilities.GenerateName("sto");
-                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
-                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
-                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+        //        // Create storage account
+        //        string accountName = TestUtilities.GenerateName("sto");
+        //        var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+        //        var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+        //        StorageManagementTestUtilities.VerifyAccountProperties(account, true);
 
-                // implement case
-                try
-                {
-                    string containerName = TestUtilities.GenerateName("container");
-                    BlobServiceProperties blobServiceProperties = storageMgmtClient.BlobService.GetServiceProperties(rgName, accountName);
-                    Assert.NotNull(blobServiceProperties);
-                    Assert.NotNull(blobServiceProperties.Id);
-                    Assert.NotNull(blobServiceProperties.Name);
-                    Assert.NotNull(blobServiceProperties.Type);
+        //        // implement case
+        //        try
+        //        {
+        //            string containerName = TestUtilities.GenerateName("container");
+        //            BlobServiceProperties blobServiceProperties = storageMgmtClient.BlobService.GetServiceProperties(rgName, accountName);
+        //            Assert.NotNull(blobServiceProperties);
+        //            Assert.NotNull(blobServiceProperties.Id);
+        //            Assert.NotNull(blobServiceProperties.Name);
+        //            Assert.NotNull(blobServiceProperties.Type);
 
-                    // set properties.
-                    blobServiceProperties.DefaultServiceVersion = "2017-04-17";
-                    blobServiceProperties.Cors = new CorsRule{
-                        AllowedOrigins = new List<string>() { "www.ab.com", "www.bc.com" },
-                        AllowedMethods = HTTPMethod.GET,
-                        MaxAgeInSeconds = 500,
-                        ExposedHeaders = new List<string>(){
-                            "x-ms-meta-data*",
-                            "x-ms-meta-source*",
-                            "x-ms-meta-abc",
-                            "x-ms-meta-bcd"
-                        },
-                        AllowedHeaders = new List<string>() {
-                            "x-ms-meta-data*",
-                            "x-ms-meta-target*",
-                            "x-ms-meta-xyz",
-                            "x-ms-meta-foo"
-                        }
-                    };
-                    storageMgmtClient.BlobService.SetServiceProperties(rgName, accountName, blobServiceProperties.Cors, blobServiceProperties.DefaultServiceVersion);
+        //            // set properties.
+        //            blobServiceProperties.DefaultServiceVersion = "2017-04-17";
+        //            blobServiceProperties.Cors = new CorsRule{
+        //                AllowedOrigins = new List<string>() { "www.ab.com", "www.bc.com" },
+        //                AllowedMethods = HTTPMethod.GET,
+        //                MaxAgeInSeconds = 500,
+        //                ExposedHeaders = new List<string>(){
+        //                    "x-ms-meta-data*",
+        //                    "x-ms-meta-source*",
+        //                    "x-ms-meta-abc",
+        //                    "x-ms-meta-bcd"
+        //                },
+        //                AllowedHeaders = new List<string>() {
+        //                    "x-ms-meta-data*",
+        //                    "x-ms-meta-target*",
+        //                    "x-ms-meta-xyz",
+        //                    "x-ms-meta-foo"
+        //                }
+        //            };
+        //            storageMgmtClient.BlobService.SetServiceProperties(rgName, accountName, blobServiceProperties.Cors, blobServiceProperties.DefaultServiceVersion);
 
-                    // veryfy properties.
-                    BlobServiceProperties blobServicePropertiesSet = storageMgmtClient.BlobService.GetServiceProperties(rgName, accountName);
-                    Assert.Equal(blobServiceProperties.Id, blobServicePropertiesSet.Id);
-                    Assert.Equal(blobServiceProperties.Name, blobServicePropertiesSet.Name);
-                    Assert.Equal(blobServiceProperties.Type, blobServicePropertiesSet.Type);
+        //            // veryfy properties.
+        //            BlobServiceProperties blobServicePropertiesSet = storageMgmtClient.BlobService.GetServiceProperties(rgName, accountName);
+        //            Assert.Equal(blobServiceProperties.Id, blobServicePropertiesSet.Id);
+        //            Assert.Equal(blobServiceProperties.Name, blobServicePropertiesSet.Name);
+        //            Assert.Equal(blobServiceProperties.Type, blobServicePropertiesSet.Type);
 
-                    Assert.Equal("2017-04-17", blobServicePropertiesSet.DefaultServiceVersion);
-                    Assert.Equal(2, blobServicePropertiesSet.Cors.AllowedOrigins.Count);
-                    Assert.Equal(HTTPMethod.GET, blobServicePropertiesSet.Cors.AllowedMethods);
-                    Assert.Equal(4, blobServicePropertiesSet.Cors.ExposedHeaders.Count);
-                    Assert.Equal(4, blobServicePropertiesSet.Cors.AllowedHeaders.Count);
-                    Assert.Equal(500, blobServicePropertiesSet.Cors.MaxAgeInSeconds);
-                }
-                finally
-                {
-                    // clean up
-                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
-                    resourcesClient.ResourceGroups.Delete(rgName);
-                }
-            }
-        }
+        //            Assert.Equal("2017-04-17", blobServicePropertiesSet.DefaultServiceVersion);
+        //            Assert.Equal(2, blobServicePropertiesSet.Cors.AllowedOrigins.Count);
+        //            Assert.Equal(HTTPMethod.GET, blobServicePropertiesSet.Cors.AllowedMethods);
+        //            Assert.Equal(4, blobServicePropertiesSet.Cors.ExposedHeaders.Count);
+        //            Assert.Equal(4, blobServicePropertiesSet.Cors.AllowedHeaders.Count);
+        //            Assert.Equal(500, blobServicePropertiesSet.Cors.MaxAgeInSeconds);
+        //        }
+        //        finally
+        //        {
+        //            // clean up
+        //            storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+        //            resourcesClient.ResourceGroups.Delete(rgName);
+        //        }
+        //    }
+        //}
 
         // create container
         // delete container
@@ -267,7 +267,7 @@ namespace Storage.Tests
 
                     var storageAccount = new CloudStorageAccount(new StorageCredentials(accountName, storageMgmtClient.StorageAccounts.ListKeys(rgName, accountName).Keys.ElementAt(0).Value), false);
                     var container = storageAccount.CreateCloudBlobClient().GetContainerReference(containerName);
-                    container.AcquireLeaseAsync(TimeSpan.FromSeconds(45)).Wait();
+                    //container.AcquireLeaseAsync(TimeSpan.FromSeconds(45)).Wait();
 
                     var blobContainerGet = storageMgmtClient.BlobContainers.Get(rgName, accountName, containerName);
                     Assert.Equal(Microsoft.Azure.Management.Storage.Models.LeaseDuration.Fixed, blobContainerGet.LeaseDuration);
@@ -327,7 +327,7 @@ namespace Storage.Tests
 
                     var storageAccount = new CloudStorageAccount(new StorageCredentials(accountName, storageMgmtClient.StorageAccounts.ListKeys(rgName, accountName).Keys.ElementAt(0).Value), false);
                     var container = storageAccount.CreateCloudBlobClient().GetContainerReference(containerName2);
-                    container.AcquireLeaseAsync(TimeSpan.FromSeconds(45)).Wait();
+                    //container.AcquireLeaseAsync(TimeSpan.FromSeconds(45)).Wait();
 
                     var containerList = storageMgmtClient.BlobContainers.List(rgName, accountName);
                 }
