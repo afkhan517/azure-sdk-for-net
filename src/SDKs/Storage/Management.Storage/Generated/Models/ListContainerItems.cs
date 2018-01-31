@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// TODO
+    /// The list of blob containers.
     /// </summary>
     public partial class ListContainerItems
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the ListContainerItems class.
         /// </summary>
-        /// <param name="value">TODO</param>
+        /// <param name="value">The list of blob containers.</param>
         public ListContainerItems(IList<ListContainerItem> value = default(IList<ListContainerItem>))
         {
             Value = value;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets TODO
+        /// Gets or sets the list of blob containers.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<ListContainerItem> Value { get; set; }

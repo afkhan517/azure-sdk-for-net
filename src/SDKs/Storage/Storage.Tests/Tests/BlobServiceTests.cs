@@ -72,44 +72,44 @@ namespace Storage.Tests
         //    }
         //}
 
-        // get blob service properties
-        [Fact]
-        public void BlobServiceGetPropertiesTest()
-        {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+        //// get blob service properties
+        //[Fact]
+        //public void BlobServiceGetPropertiesTest()
+        //{
+        //    var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+        //    using (MockContext context = MockContext.Start(this.GetType().FullName))
+        //    {
+        //        var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+        //        var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
-                // Create resource group
-                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+        //        // Create resource group
+        //        var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
-                // Create storage account
-                string accountName = TestUtilities.GenerateName("sto");
-                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
-                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
-                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+        //        // Create storage account
+        //        string accountName = TestUtilities.GenerateName("sto");
+        //        var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+        //        var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+        //        StorageManagementTestUtilities.VerifyAccountProperties(account, true);
 
-                // implement case
-                try
-                {
-                    string containerName = TestUtilities.GenerateName("container");
-                    BlobServiceProperties blobServiceProperties = storageMgmtClient.BlobService.GetServiceProperties(rgName, accountName);
-                    Assert.NotNull(blobServiceProperties);
-                    Assert.NotNull(blobServiceProperties.Id);
-                    Assert.NotNull(blobServiceProperties.Name);
-                    Assert.NotNull(blobServiceProperties.Type);
-                }
-                finally
-                {
-                    // clean up
-                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
-                    resourcesClient.ResourceGroups.Delete(rgName);
-                }
-            }
-        }
+        //        // implement case
+        //        try
+        //        {
+        //            string containerName = TestUtilities.GenerateName("container");
+        //            BlobServiceProperties blobServiceProperties = storageMgmtClient.BlobService.GetServiceProperties(rgName, accountName);
+        //            Assert.NotNull(blobServiceProperties);
+        //            Assert.NotNull(blobServiceProperties.Id);
+        //            Assert.NotNull(blobServiceProperties.Name);
+        //            Assert.NotNull(blobServiceProperties.Type);
+        //        }
+        //        finally
+        //        {
+        //            // clean up
+        //            storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+        //            resourcesClient.ResourceGroups.Delete(rgName);
+        //        }
+        //    }
+        //}
 
         // set blob service properties
         //[Fact]

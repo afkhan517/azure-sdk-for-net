@@ -18,10 +18,10 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// TODO
+    /// The blob container properties be listed out.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ListContainerItem : BlobResourceWithEtag
+    public partial class ListContainerItem : AzureEntityResource
     {
         /// <summary>
         /// Initializes a new instance of the ListContainerItem class.
@@ -34,20 +34,32 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the ListContainerItem class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="publicAccess">TODO. Possible values include:
-        /// 'container', 'blob'</param>
-        /// <param name="leaseStatus">TODO. Possible values include: 'locked',
-        /// 'unlocked'</param>
-        /// <param name="leaseState">TODO. Possible values include:
-        /// 'available', 'leased', 'expired', 'breaking', 'broken'</param>
-        /// <param name="leaseDuration">TODO. Possible values include:
-        /// 'infinite', 'fixed'</param>
-        /// <param name="metadata">TODO</param>
-        /// <param name="immutabilityPolicy">TODO</param>
-        /// <param name="legalHold">TODO</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="etag">Resource Etag.</param>
+        /// <param name="publicAccess">Specifies whether data in the container
+        /// may be accessed publicly and the level of access. Possible values
+        /// include: 'Container', 'Blob', 'None'</param>
+        /// <param name="lastModifiedTime">Returns the date and time the
+        /// container was last modified.</param>
+        /// <param name="leaseStatus">The lease status of the container.
+        /// Possible values include: 'Locked', 'Unlocked'</param>
+        /// <param name="leaseState">Lease state of the container. Possible
+        /// values include: 'Available', 'Leased', 'Expired', 'Breaking',
+        /// 'Broken'</param>
+        /// <param name="leaseDuration">Specifies whether the lease on a
+        /// container is of infinite or fixed duration, only when the container
+        /// is leased. Possible values include: 'Infinite', 'Fixed'</param>
+        /// <param name="metadata">A name-value pair to associate with the
+        /// container as metadata.</param>
+        /// <param name="immutabilityPolicy">The ImmutabilityPolicy property of
+        /// the container.</param>
+        /// <param name="legalHold">The LegalHold property of the
+        /// container.</param>
         public ListContainerItem(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), PublicAccess? publicAccess = default(PublicAccess?), System.DateTime? lastModifiedTime = default(System.DateTime?), LeaseStatus? leaseStatus = default(LeaseStatus?), LeaseState? leaseState = default(LeaseState?), LeaseDuration? leaseDuration = default(LeaseDuration?), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHold legalHold = default(LegalHold))
             : base(id, name, type, etag)
         {
@@ -68,49 +80,56 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets TODO. Possible values include: 'container', 'blob'
+        /// Gets or sets specifies whether data in the container may be
+        /// accessed publicly and the level of access. Possible values include:
+        /// 'Container', 'Blob', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicAccess")]
         public PublicAccess? PublicAccess { get; set; }
 
         /// <summary>
+        /// Gets returns the date and time the container was last modified.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
         public System.DateTime? LastModifiedTime { get; private set; }
 
         /// <summary>
-        /// Gets TODO. Possible values include: 'locked', 'unlocked'
+        /// Gets the lease status of the container. Possible values include:
+        /// 'Locked', 'Unlocked'
         /// </summary>
         [JsonProperty(PropertyName = "properties.leaseStatus")]
         public LeaseStatus? LeaseStatus { get; private set; }
 
         /// <summary>
-        /// Gets TODO. Possible values include: 'available', 'leased',
-        /// 'expired', 'breaking', 'broken'
+        /// Gets lease state of the container. Possible values include:
+        /// 'Available', 'Leased', 'Expired', 'Breaking', 'Broken'
         /// </summary>
         [JsonProperty(PropertyName = "properties.leaseState")]
         public LeaseState? LeaseState { get; private set; }
 
         /// <summary>
-        /// Gets TODO. Possible values include: 'infinite', 'fixed'
+        /// Gets specifies whether the lease on a container is of infinite or
+        /// fixed duration, only when the container is leased. Possible values
+        /// include: 'Infinite', 'Fixed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.leaseDuration")]
         public LeaseDuration? LeaseDuration { get; private set; }
 
         /// <summary>
-        /// Gets or sets TODO
+        /// Gets or sets a name-value pair to associate with the container as
+        /// metadata.
         /// </summary>
         [JsonProperty(PropertyName = "properties.metadata")]
         public IDictionary<string, string> Metadata { get; set; }
 
         /// <summary>
-        /// Gets TODO
+        /// Gets the ImmutabilityPolicy property of the container.
         /// </summary>
         [JsonProperty(PropertyName = "properties.immutabilityPolicy")]
         public ImmutabilityPolicyProperties ImmutabilityPolicy { get; private set; }
 
         /// <summary>
-        /// Gets TODO
+        /// Gets the LegalHold property of the container.
         /// </summary>
         [JsonProperty(PropertyName = "properties.legalHold")]
         public LegalHold LegalHold { get; private set; }
