@@ -215,8 +215,10 @@ namespace Storage.Tests
 
                     blobContainer = storageMgmtClient.BlobContainers.Get(rgName, accountName, containerName);
                     Assert.Null(blobContainer.Metadata);
-                    Assert.Null(blobContainer.PublicAccess);
+                    Assert.Equal(PublicAccess.None, blobContainer.PublicAccess);
                     storageMgmtClient.BlobContainers.Delete(rgName, accountName, containerName);
+                    Assert.False(blobContainer.HasImmutabilityPolicy);
+                    Assert.False(blobContainer.HasLegalHold);
                 }
                 finally
                 {
@@ -260,19 +262,23 @@ namespace Storage.Tests
                     blobContainer.Metadata.Add("metadata", "true");
                     blobContainer.PublicAccess = PublicAccess.Container;
                     var blobContainerSet = storageMgmtClient.BlobContainers.Update(rgName, accountName, containerName, metadata:blobContainer.Metadata, publicAccess:blobContainer.PublicAccess);
-                    Assert.NotNull(blobContainer.Metadata);
-                    Assert.NotNull(blobContainer.PublicAccess);
+                    Assert.NotNull(blobContainerSet.Metadata);
+                    Assert.Equal(PublicAccess.Container, blobContainerSet.PublicAccess);
                     Assert.Equal(blobContainer.Metadata, blobContainerSet.Metadata);
                     Assert.Equal(blobContainer.PublicAccess, blobContainerSet.PublicAccess);
+                    Assert.False(blobContainerSet.HasImmutabilityPolicy);
+                    Assert.False(blobContainerSet.HasLegalHold);
 
                     var storageAccount = new CloudStorageAccount(new StorageCredentials(accountName, storageMgmtClient.StorageAccounts.ListKeys(rgName, accountName).Keys.ElementAt(0).Value), false);
                     var container = storageAccount.CreateCloudBlobClient().GetContainerReference(containerName);
-                    //container.AcquireLeaseAsync(TimeSpan.FromSeconds(45)).Wait();
+                  //  container.AcquireLeaseAsync(TimeSpan.FromSeconds(45)).Wait();
 
                     var blobContainerGet = storageMgmtClient.BlobContainers.Get(rgName, accountName, containerName);
-                    Assert.Equal(Microsoft.Azure.Management.Storage.Models.LeaseDuration.Fixed, blobContainerGet.LeaseDuration);
+                    //Assert.Equal(Microsoft.Azure.Management.Storage.Models.LeaseDuration.Fixed, blobContainerGet.LeaseDuration);
                     Assert.Equal(blobContainerSet.PublicAccess, blobContainerGet.PublicAccess);
                     Assert.Equal(blobContainerSet.Metadata, blobContainerGet.Metadata);
+                    Assert.False(blobContainerGet.HasImmutabilityPolicy);
+                    Assert.False(blobContainerGet.HasLegalHold);
                 }
                 finally
                 {
@@ -319,6 +325,8 @@ namespace Storage.Tests
                     Assert.NotNull(blobContainer.PublicAccess);
                     Assert.Equal(blobContainer.Metadata, blobContainerSet.Metadata);
                     Assert.Equal(blobContainer.PublicAccess, blobContainerSet.PublicAccess);
+                    Assert.False(blobContainerSet.HasImmutabilityPolicy);
+                    Assert.False(blobContainerSet.HasLegalHold);
 
                     string containerName2 = TestUtilities.GenerateName("container");
                     BlobContainer blobContainer2 = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName2);
@@ -329,7 +337,15 @@ namespace Storage.Tests
                     var container = storageAccount.CreateCloudBlobClient().GetContainerReference(containerName2);
                     //container.AcquireLeaseAsync(TimeSpan.FromSeconds(45)).Wait();
 
-                    var containerList = storageMgmtClient.BlobContainers.List(rgName, accountName);
+                    ListContainerItems containerList = storageMgmtClient.BlobContainers.List(rgName, accountName);
+                    foreach (ListContainerItem blobContainerList in containerList.Value)
+                    {
+                        Assert.NotNull(blobContainer.Metadata);
+                        Assert.NotNull(blobContainer.PublicAccess);
+                        Assert.False(blobContainerSet.HasImmutabilityPolicy);
+                        Assert.False(blobContainerSet.HasLegalHold);
+                    }
+
                 }
                 finally
                 {

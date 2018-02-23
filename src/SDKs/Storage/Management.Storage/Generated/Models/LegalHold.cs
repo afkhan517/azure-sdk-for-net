@@ -57,14 +57,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// cleared out. There can be a maximum of 1000 blob containers with
         /// hasLegalHold=true for a given account.
         /// </summary>
-        [JsonProperty(PropertyName = "HasLegalHold")]
+        [JsonProperty(PropertyName = "hasLegalHold")]
         public bool? HasLegalHold { get; private set; }
 
         /// <summary>
         /// Gets or sets each tag should be 3 to 23 alphanumeric characters and
         /// is normalized to lower case at SRP.
         /// </summary>
-        [JsonProperty(PropertyName = "Tags")]
+        [JsonProperty(PropertyName = "tags")]
         public IList<string> Tags { get; set; }
 
     }

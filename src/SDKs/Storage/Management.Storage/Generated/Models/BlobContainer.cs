@@ -61,7 +61,17 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// the container.</param>
         /// <param name="legalHold">The LegalHold property of the
         /// container.</param>
-        public BlobContainer(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), PublicAccess? publicAccess = default(PublicAccess?), System.DateTime? lastModifiedTime = default(System.DateTime?), LeaseStatus? leaseStatus = default(LeaseStatus?), LeaseState? leaseState = default(LeaseState?), LeaseDuration? leaseDuration = default(LeaseDuration?), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHold legalHold = default(LegalHold))
+        /// <param name="hasLegalHold">The hasLegalHold public property is set
+        /// to true by SRP if there are at least one existing tag. The
+        /// hasLegalHold public property is set to false by SRP if all existing
+        /// legal hold tags are cleared out. There can be a maximum of 1000
+        /// blob containers with hasLegalHold=true for a given account.</param>
+        /// <param name="hasImmutabilityPolicy">The hasImmutabilityPolicy
+        /// public property is set to true by SRP if ImmutabilityPolicy has
+        /// been created for this container. The hasImmutabilityPolicy public
+        /// property is set to false by SRP if ImmutabilityPolicy has not been
+        /// created for this container.</param>
+        public BlobContainer(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), PublicAccess? publicAccess = default(PublicAccess?), System.DateTime? lastModifiedTime = default(System.DateTime?), LeaseStatus? leaseStatus = default(LeaseStatus?), LeaseState? leaseState = default(LeaseState?), LeaseDuration? leaseDuration = default(LeaseDuration?), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHold legalHold = default(LegalHold), bool? hasLegalHold = default(bool?), bool? hasImmutabilityPolicy = default(bool?))
             : base(id, name, type, etag)
         {
             PublicAccess = publicAccess;
@@ -72,6 +82,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             Metadata = metadata;
             ImmutabilityPolicy = immutabilityPolicy;
             LegalHold = legalHold;
+            HasLegalHold = hasLegalHold;
+            HasImmutabilityPolicy = hasImmutabilityPolicy;
             CustomInit();
         }
 
@@ -134,6 +146,25 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.legalHold")]
         public LegalHold LegalHold { get; private set; }
+
+        /// <summary>
+        /// Gets the hasLegalHold public property is set to true by SRP if
+        /// there are at least one existing tag. The hasLegalHold public
+        /// property is set to false by SRP if all existing legal hold tags are
+        /// cleared out. There can be a maximum of 1000 blob containers with
+        /// hasLegalHold=true for a given account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hasLegalHold")]
+        public bool? HasLegalHold { get; private set; }
+
+        /// <summary>
+        /// Gets the hasImmutabilityPolicy public property is set to true by
+        /// SRP if ImmutabilityPolicy has been created for this container. The
+        /// hasImmutabilityPolicy public property is set to false by SRP if
+        /// ImmutabilityPolicy has not been created for this container.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hasImmutabilityPolicy")]
+        public bool? HasImmutabilityPolicy { get; private set; }
 
         /// <summary>
         /// Validate the object.

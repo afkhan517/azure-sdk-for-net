@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Gets or sets the immutability period for the blobs in the container
         /// since the policy creation, in days.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ImmutabilityPeriodSinceCreationInDays")]
+        [JsonProperty(PropertyName = "properties.immutabilityPeriodSinceCreationInDays")]
         public int ImmutabilityPeriodSinceCreationInDays { get; set; }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// values include: Locked and Unlocked. Possible values include:
         /// 'Locked', 'Unlocked'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.State")]
+        [JsonProperty(PropertyName = "properties.state")]
         public ImmutabilityPolicyState? State { get; private set; }
 
         /// <summary>
